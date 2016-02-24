@@ -1,5 +1,7 @@
 package com.trueconf.videochat.test;
 
+import android.os.Environment;
+
 import java.util.Date;
 import java.util.Properties;
 import javax.activation.CommandMap;
@@ -111,7 +113,7 @@ public class Mail extends javax.mail.Authenticator {
 
     public void addAttachment(String filename) throws Exception {
         BodyPart messageBodyPart = new MimeBodyPart();
-        DataSource source = new FileDataSource(filename);
+        DataSource source = new FileDataSource(Environment.getExternalStorageDirectory()+ "/"+filename);
         messageBodyPart.setDataHandler(new DataHandler(source));
         messageBodyPart.setFileName(filename);
 

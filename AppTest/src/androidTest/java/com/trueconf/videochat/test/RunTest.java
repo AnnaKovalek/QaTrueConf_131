@@ -35,6 +35,7 @@ public class RunTest extends ActivityInstrumentationTestCase2 {
         solo.finishOpenedActivities();
         super.tearDown();
 		Mail mail = new Mail();
+		mail.addAttachment("Download/dozer-user-guide.pdf");
 		mail.send();
   	}
   
