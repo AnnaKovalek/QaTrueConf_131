@@ -1,0 +1,72 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.5.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    androidTestCompile fileTree(dir: 'libs', include: 'activation.jar')
+    androidTestCompile fileTree(dir: 'libs', include: 'additionnal.jar')
+    androidTestCompile fileTree(dir: 'libs', include: 'mail.jar')
+    androidTestCompile fileTree(dir: 'libs', include: 'robotium-solo-5.5.4.jar')
+    compile 'com.android.support:appcompat-v7:18.+'
+}
+
+android {
+    compileSdkVersion 'android-15'
+    buildToolsVersion '23.0.2'
+    defaultConfig {
+        minSdkVersion 17
+        applicationId "com.trueconf.videochat"
+    }
+
+    android {
+        defaultConfig {
+            minSdkVersion 17
+            applicationId "com.trueconf.videochat"
+        }
+
+        lintOptions {
+            abortOnError false
+        }
+        sourceSets
+                {
+                    androidTest
+                            {
+                                res.srcDirs = ['res']
+                                assets.srcDirs = ['assets']
+                            }
+                }
+    }
+    buildTypes {
+        release {
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+}
+
+task assembleDebug(overwrite: true) {}
+
+task copyTask(type: Copy) {
+    from 'libs//TrueConf_debug.apk'
+    into 'build/outputs/apk/'
+    rename {
+        'AppTest-debug.apk'
+    }
+}
+
+assembleDebug.dependsOn copyTask
