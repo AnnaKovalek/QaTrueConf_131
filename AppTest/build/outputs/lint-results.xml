@@ -11,29 +11,32 @@
         explanation="If a class is referenced in the manifest, it must also exist in the project (or in one of the libraries included by the project. This check helps uncover typos in registration names, or attempts to rename or move classes without updating the manifest file properly."
         url="http://developer.android.com/guide/topics/manifest/manifest-intro.html"
         urls="http://developer.android.com/guide/topics/manifest/manifest-intro.html"
-        errorLine1="        &lt;activity"
+        errorLine1="        &lt;activity android:label=&quot;@string/app_name&quot; android:name=&quot;Login&quot;>"
         errorLine2="        ^">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\AndroidManifest.xml"
-            line="14"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/AndroidManifest.xml"
+            line="3"
             column="9"/>
     </issue>
 
     <issue
-        id="PropertyEscape"
-        severity="Error"
-        message="Windows file separators (`\`) and drive letter separators (&apos;:&apos;) must be escaped (`\\`) in property files; use C\:\\Users\\Anna\\AppData\\Local\\Android\\sdk\r"
+        id="SimpleDateFormat"
+        severity="Warning"
+        message="To get local formatting use `getDateInstance()`, `getDateTimeInstance()`, or `getTimeInstance()`, or use `new SimpleDateFormat(String template, Locale locale)` with for example `Locale.US` for ASCII dates."
         category="Correctness"
         priority="6"
-        summary="Incorrect property escapes"
-        explanation="All backslashes and colons in .property files must be escaped with a backslash (\). This means that when writing a Windows path, you must escape the file separators, so the path \My\Files should be written as `key=\\My\\Files.`"
-        errorLine1="sdk.dir=C:\\Users\\Anna\\AppData\\Local\\Android\\sdk"
-        errorLine2="         ~"
-        quickfix="studio">
+        summary="Implied locale in date format"
+        explanation="Almost all callers should use `getDateInstance()`, `getDateTimeInstance()`, or `getTimeInstance()` to get a ready-made instance of SimpleDateFormat suitable for the user&apos;s locale. The main reason you&apos;d create an instance this class directly is because you need to format/parse a specific machine-readable format, in which case you almost certainly want to explicitly ask for US to ensure that you get ASCII digits (rather than, say, Arabic digits).
+
+Therefore, you should either use the form of the SimpleDateFormat constructor where you pass in an explicit locale, such as Locale.US, or use one of the get instance methods, or suppress this error if really know what you are doing."
+        url="http://developer.android.com/reference/java/text/SimpleDateFormat.html"
+        urls="http://developer.android.com/reference/java/text/SimpleDateFormat.html"
+        errorLine1="        SimpleDateFormat format1 = new SimpleDateFormat(&quot;dd_MM_yyyy&quot;);"
+        errorLine2="                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\local.properties"
-            line="10"
-            column="10"/>
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/androidTest/java/com/trueconf/videochat/test/testJReport/JZip.java"
+            line="41"
+            column="36"/>
     </issue>
 
     <issue
@@ -44,11 +47,11 @@
         priority="4"
         summary="Obsolete Gradle Dependency"
         explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
-        errorLine1="    compile &apos;com.android.support:appcompat-v7:18.+&apos;"
+        errorLine1="    compile &apos;com.android.support:appcompat-v7:18.+&apos;"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         quickfix="studio">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\build.gradle"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/build.gradle"
             line="26"
             column="5"/>
     </issue>
@@ -61,11 +64,11 @@
         priority="4"
         summary="Gradle Dynamic Version"
         explanation="Using `+` in dependencies lets you automatically pick up the latest available version rather than a specific, named version. However, this is not recommended; your builds are not repeatable; you may have tested with a slightly different version than what the build server used. (Using a dynamic version as the major version number is more problematic than using it in the minor version position.)"
-        errorLine1="    compile &apos;com.android.support:appcompat-v7:18.+&apos;"
+        errorLine1="    compile &apos;com.android.support:appcompat-v7:18.+&apos;"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         quickfix="studio">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\build.gradle"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/build.gradle"
             line="26"
             column="5"/>
     </issue>
@@ -73,16 +76,16 @@
     <issue
         id="UsingHttp"
         severity="Warning"
-        message="Replace HTTP with HTTPS for better security; use https\://services.gradle.org/distributions/gradle-1.12-all.zip"
+        message="Replace HTTP with HTTPS for better security; use https\://services.gradle.org/distributions/gradle-1.12-all.zip"
         category="Security"
         priority="6"
         summary="Using HTTP instead of HTTPS"
         explanation="The Gradle Wrapper is available both via HTTP and HTTPS. HTTPS is more secure since it protects against man-in-the-middle attacks etc. Older projects created in Android Studio used HTTP but we now default to HTTPS and recommend upgrading existing projects."
-        errorLine1="distributionUrl=http\://services.gradle.org/distributions/gradle-1.12-all.zip"
+        errorLine1="distributionUrl=http\://services.gradle.org/distributions/gradle-1.12-all.zip"
         errorLine2="                ~~~~"
         quickfix="studio">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\gradle\wrapper\gradle-wrapper.properties"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/gradle/wrapper/gradle-wrapper.properties"
             line="6"
             column="17"/>
     </issue>
@@ -107,12 +110,12 @@ To fix this warning, decide whether your application should support backup, and 
 If not set to false, and if targeting API 23 or later, lint will also warn that you should set `android:fullBackupContent` to configure auto backup."
         url="https://developer.android.com/preview/backup/index.html"
         urls="https://developer.android.com/preview/backup/index.html,http://developer.android.com/reference/android/R.attr.html#allowBackup"
-        errorLine1="    &lt;application"
+        errorLine1="    &lt;application android:icon=&quot;@drawable/ic_launcher&quot; android:label=&quot;@string/app_name&quot;>"
         errorLine2="    ^"
         quickfix="studio,adt">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\AndroidManifest.xml"
-            line="11"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/AndroidManifest.xml"
+            line="2"
             column="5"/>
     </issue>
 
@@ -125,7 +128,19 @@ If not set to false, and if targeting API 23 or later, lint will also warn that 
         summary="Unused resources"
         explanation="Unused resources make applications larger and slow down builds.">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\res\layout\activity_home.xml"/>
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/res/layout/activity_home.xml"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.layout.activity_main` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.">
+        <location
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/res/layout/activity_main.xml"/>
     </issue>
 
     <issue
@@ -137,13 +152,13 @@ If not set to false, and if targeting API 23 or later, lint will also warn that 
         summary="Unused resources"
         explanation="Unused resources make applications larger and slow down builds.">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\res\layout\main.xml"/>
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/res/layout/main.xml"/>
     </issue>
 
     <issue
         id="IconMissingDensityFolder"
         severity="Warning"
-        message="Missing density variation folders in `src\main\res`: drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi"
+        message="Missing density variation folders in `src/main/res`: drawable-xhdpi, drawable-xxhdpi, drawable-xxxhdpi"
         category="Usability:Icons"
         priority="3"
         summary="Missing density folder"
@@ -153,7 +168,7 @@ Low density is not really used much anymore, so this check ignores the ldpi dens
         url="http://developer.android.com/guide/practices/screens_support.html"
         urls="http://developer.android.com/guide/practices/screens_support.html">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\res"/>
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/res"/>
     </issue>
 
     <issue
@@ -166,11 +181,11 @@ Low density is not really used much anymore, so this check ignores the ldpi dens
         explanation="Adds deep links to get your app into the Google index, to get installs and traffic to your app from Google Search."
         url="https://g.co/AppIndexing/AndroidStudio"
         urls="https://g.co/AppIndexing/AndroidStudio"
-        errorLine1="    &lt;application"
+        errorLine1="    &lt;application android:icon=&quot;@drawable/ic_launcher&quot; android:label=&quot;@string/app_name&quot;>"
         errorLine2="    ^">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\AndroidManifest.xml"
-            line="11"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/AndroidManifest.xml"
+            line="2"
             column="5"/>
     </issue>
 
@@ -188,11 +203,11 @@ Low density is not really used much anymore, so this check ignores the ldpi dens
 * The application cannot be translated to other languages by just adding new translations for existing string resources.
 
 In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
-        errorLine1="        android:text=&quot;Test 1&quot;"
+        errorLine1="        android:text=&quot;Test 1&quot;"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~"
         quickfix="adt">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\res\layout\activity_home.xml"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/res/layout/activity_home.xml"
             line="15"
             column="9"/>
     </issue>
@@ -211,11 +226,11 @@ In Android Studio and Eclipse there are quickfixes to automatically extract this
 * The application cannot be translated to other languages by just adding new translations for existing string resources.
 
 In Android Studio and Eclipse there are quickfixes to automatically extract this hardcoded string into a resource lookup."
-        errorLine1="    android:text=&quot;Hello World, Login&quot;"
+        errorLine1="    android:text=&quot;Hello World, Login&quot;"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         quickfix="adt">
         <location
-            file="C:\Users\Anna\AndroidStudioProjects\QaTrueConf_131\AppTest\src\main\res\layout\main.xml"
+            file="/home/anna/StudioProjects/QaTrueConf_131/AppTest/src/main/res/layout/main.xml"
             line="10"
             column="5"/>
     </issue>
