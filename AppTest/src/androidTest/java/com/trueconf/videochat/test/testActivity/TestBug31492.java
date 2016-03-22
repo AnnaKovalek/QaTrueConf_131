@@ -4,22 +4,18 @@ package com.trueconf.videochat.test.testActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
-
 import junit.framework.AssertionFailedError;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static junit.framework.Assert.assertTrue;
 
 /**
  * Зависания клиента после нажатия "Close chat"
  */
+
 public class TestBug31492 {
     private Solo solo;
     private android.widget.ListView homeListView_1;
@@ -62,7 +58,7 @@ public class TestBug31492 {
         solo.sleep(2000);
         solo.clickOnView(solo.getView("btn_floating"));
         solo.sleep(2000);
-       //нажатие на первого пользователя в списке чатов
+        //Нажатие на первого пользователя в списке чатов
         solo.clickInRecyclerView(0, 1);
         solo.sleep(500);
         assertTrue("Activity Chat is not found", solo.waitForActivity("Chat"));
@@ -70,7 +66,7 @@ public class TestBug31492 {
         solo.sendKey(KeyEvent.KEYCODE_MENU);
         solo.sleep(500);
         solo.clickInList(4, 0);
-        solo.sleep(1000);
+        solo.sleep(500);
         assertTrue("Activity ContactTabs is not found", solo.waitForActivity("ContactTabs"));
         solo.sleep(1000);
 
