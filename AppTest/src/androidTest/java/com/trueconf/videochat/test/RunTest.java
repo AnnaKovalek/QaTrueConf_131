@@ -1,6 +1,7 @@
 package com.trueconf.videochat.test;
 
 import com.robotium.solo.*;
+import com.trueconf.videochat.test.testActivity.TestBug29460;
 import com.trueconf.videochat.test.testActivity.TestBug31048;
 import com.trueconf.videochat.test.testActivity.TestBug31492;
 import com.trueconf.videochat.test.testActivity.TestFloatingButton;
@@ -15,6 +16,7 @@ public class RunTest extends ActivityInstrumentationTestCase2 {
 	private TestFloatingButton testFloatingButton;
 	private TestBug31492 testBug31492;
 	private TestBug31048 testBug31048;
+	private TestBug29460 testBug29460;
   	
   	private static final String LAUNCHER_ACTIVITY_FULL_CLASSNAME = "com.trueconf.gui.activities.Login";
     private static Class<?> launcherActivityClass;
@@ -37,6 +39,7 @@ public class RunTest extends ActivityInstrumentationTestCase2 {
 		testFloatingButton = new TestFloatingButton(solo);
 		testBug31492 = new TestBug31492(solo);
 		testBug31048 = new TestBug31048(solo);
+		testBug29460 = new TestBug29460(solo);
 		getActivity();
 
   	}
@@ -45,6 +48,7 @@ public class RunTest extends ActivityInstrumentationTestCase2 {
 
 	public void testBug31492 (){testBug31492.testBug31492();}
 	public void testBug31048 () {testBug31048.testBug31048();}
+	public void testBug29460 (){testBug29460.testBug29460();}
   
    	@Override
    	public void tearDown() throws Exception {
