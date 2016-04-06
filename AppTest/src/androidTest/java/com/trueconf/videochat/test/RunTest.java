@@ -5,7 +5,7 @@ import com.trueconf.videochat.test.testActivity.TestBug29460;
 import com.trueconf.videochat.test.testActivity.TestBug31048;
 import com.trueconf.videochat.test.testActivity.TestBug31492;
 import com.trueconf.videochat.test.testActivity.TestFloatingButton;
-import com.trueconf.videochat.test.testJReport.Mail;
+import com.trueconf.videochat.test.testActivity.TestLogInLogOut;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -17,6 +17,8 @@ public class RunTest extends ActivityInstrumentationTestCase2 {
 	private TestBug31492 testBug31492;
 	private TestBug31048 testBug31048;
 	private TestBug29460 testBug29460;
+	private TestLogInLogOut testLogInLogOut;
+
   	
   	private static final String LAUNCHER_ACTIVITY_FULL_CLASSNAME = "com.trueconf.gui.activities.Login";
     private static Class<?> launcherActivityClass;
@@ -40,23 +42,24 @@ public class RunTest extends ActivityInstrumentationTestCase2 {
 		testBug31492 = new TestBug31492(solo);
 		testBug31048 = new TestBug31048(solo);
 		testBug29460 = new TestBug29460(solo);
+		testLogInLogOut = new TestLogInLogOut(solo);
 		getActivity();
 
   	}
 
 	public void testFloatingButton (){testFloatingButton.testFloatingButton();}
-
 	public void testBug31492 (){testBug31492.testBug31492();}
 	public void testBug31048 () {testBug31048.testBug31048();}
 	public void testBug29460 (){testBug29460.testBug29460();}
+
+	/** TestLogInLogOut*/
+	public void testLogInLogOut (){testLogInLogOut.testLogInLogOut();}
   
    	@Override
    	public void tearDown() throws Exception {
         solo.finishOpenedActivities();
-        super.tearDown();
-		//Mail mail = new Mail();
-		//mail.addAttachment("Download/dozer-user-guide.pdf");
-		//mail.send();
+		super.tearDown();
+
   	}
   /**
 	public void testRun() {

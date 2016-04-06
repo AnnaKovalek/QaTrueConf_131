@@ -1,15 +1,21 @@
 package com.trueconf.videochat.test.testActivity;
 
 
-import android.util.Log;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
 import junit.framework.AssertionFailedError;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -19,6 +25,7 @@ import static junit.framework.Assert.assertTrue;
 public class TestBug31492 {
     private Solo solo;
     private android.widget.ListView homeListView_1;
+    private String nameImg;
 
     public TestBug31492(Solo solo) {
         this.solo = solo;
@@ -29,6 +36,8 @@ public class TestBug31492 {
         solo.waitForActivity("Login", 2000);
         solo.clickOnView(solo.getView("tv_is_have_account"));
         solo.sleep(300);
+
+
         assertTrue("Activity Login is not found", solo.waitForActivity("Login"));
         solo.clickOnView(solo.getView("et_videochat_id"));
         solo.clearEditText((android.widget.EditText) solo.getView("et_videochat_id"));
@@ -79,6 +88,11 @@ public class TestBug31492 {
  solo.clickOnImage(2);
  solo.sleep(1500);
  */
+
+
+        nameImg = "myScreenShot";
+        solo.takeScreenshot(nameImg);
+
         /** 2. Выход с приложения  */
         //2.0 Нажатимаем на HomeButton
         solo.clickOnActionBarHomeButton();
@@ -102,6 +116,34 @@ public class TestBug31492 {
         assertTrue("Login is not found!", solo.waitForActivity("Login"));
         solo.sleep(300);
         solo.goBack();
+
+
+        File f1 = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/" + nameImg + ".jpg");
+        File f2 = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/report_/"+ nameImg + ".jpg"); // 2 action
+        try {
+            f2.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+     //   boolean created = f2.mkdirs();
+
+        try {
+            InputStream in = new FileInputStream(f1);
+            OutputStream out = new FileOutputStream(f2);
+
+            int i;
+            while ((i = in.read()) != -1) {
+                out.write(i);
+            }
+
+            out.flush();
+            out.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private String findDrawerListElement(int positionElements) {
