@@ -5,16 +5,12 @@ import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
+
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
-import junit.framework.AssertionFailedError;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.trueconf.videochat.test.testJReport.jreport.JReport;
 
+import junit.framework.AssertionFailedError;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -22,62 +18,65 @@ import static junit.framework.Assert.assertTrue;
  * Зависания клиента после нажатия "Close chat"
  */
 
-public class TestBug31492 {
-    private Solo solo;
+public class TestBug31492 extends JReport {
+    //private Solo solo;
     private android.widget.ListView homeListView_1;
-    private String nameImg;
+    private String errorMessage;
 
     public TestBug31492(Solo solo) {
-        this.solo = solo;
+        super(solo);
     }
 
     public void testBug31492() {
-        Timeout.setSmallTimeout(10000);
-        solo.waitForActivity("Login", 2000);
-        solo.clickOnView(solo.getView("tv_is_have_account"));
-        solo.sleep(300);
 
-
-        assertTrue("Activity Login is not found", solo.waitForActivity("Login"));
-        solo.clickOnView(solo.getView("et_videochat_id"));
-        solo.clearEditText((android.widget.EditText) solo.getView("et_videochat_id"));
-        solo.enterText((android.widget.EditText) solo.getView("et_videochat_id"), "android.test");
-        solo.clickOnView(solo.getView("et_password"));
-        solo.clearEditText((android.widget.EditText) solo.getView("et_password"));
-        solo.enterText((android.widget.EditText) solo.getView("et_password"), "ast456zx");
-        solo.sleep(300);
-        solo.clickOnView(solo.getView("btn_login_ll"));
-        solo.sleep(1500);
-        assertTrue("Activity ContactTabs is not found", solo.waitForActivity("ContactTabs"));
-        //Стартовое уведомление
-        View menuDialogHeader = null;
         try {
-            menuDialogHeader = solo.getView("menuDialogHeader");
-        } catch (AssertionFailedError e) {
+            initReport("testBug31492", "Метод проверки по дискрипшину бага Зависания клиента после нажатия Close chat"); // :1 Begin Report
+            Timeout.setSmallTimeout(15000);
+            solo.waitForActivity("Login", 2000);
+            assertTextCaseActivity("запуск приложения", "Login");
+            solo.clickOnView(solo.getView("tv_is_have_account"));
+            solo.sleep(300);
+            assertTextCaseActivity("Проверка перехода на Activity Login", "Login");
+            solo.clickOnView(solo.getView("et_videochat_id"));
+            solo.clearEditText((android.widget.EditText) solo.getView("et_videochat_id"));
+            solo.enterText((android.widget.EditText) solo.getView("et_videochat_id"), "android.test");
+            solo.clickOnView(solo.getView("et_password"));
+            solo.clearEditText((android.widget.EditText) solo.getView("et_password"));
+            solo.enterText((android.widget.EditText) solo.getView("et_password"), "ast456zx");
+            solo.sleep(300);
+            solo.clickOnView(solo.getView("btn_login_ll"));
+            solo.sleep(1500);
+            assertTextCaseActivity("Проверка перехода на Activity ContactTabs", "ContactTabs");
+            // assertTrue("Activity ContactTabs is not found", solo.waitForActivity("ContactTabs"));
+            //Стартовое уведомление
+            View menuDialogHeader = null;
+            try {
+                menuDialogHeader = solo.getView("menuDialogHeader");
+            } catch (AssertionFailedError e) {
 
-        }
-        if (menuDialogHeader != null) {
-            solo.goBack();
-        }
-        solo.sleep(1000);
+            }
+            if (menuDialogHeader != null) {
+                solo.goBack();
+            }
+            solo.sleep(1000);
 
-
-        // Message tab
-        solo.clickOnImage(5);
-        solo.sleep(2000);
-        solo.clickOnView(solo.getView("btn_floating"));
-        solo.sleep(2000);
-        //Нажатие на первого пользователя в списке чатов
-        solo.clickInRecyclerView(0, 1);
-        solo.sleep(500);
-        assertTrue("Activity Chat is not found", solo.waitForActivity("Chat"));
-        solo.sleep(300);
-        solo.sendKey(KeyEvent.KEYCODE_MENU);
-        solo.sleep(500);
-        solo.clickInList(4, 0);
-        solo.sleep(500);
-        assertTrue("Activity ContactTabs is not found", solo.waitForActivity("ContactTabs"));
-        solo.sleep(1000);
+            // Message tab
+            solo.clickOnImage(5);
+            solo.sleep(2000);
+            solo.clickOnView(solo.getView("btn_floating"));
+            solo.sleep(2000);
+            // Нажатие на первого пользователя в списке чатов
+            solo.clickInRecyclerView(0, 1);
+            solo.sleep(500);
+            // assertTrue("Activity Chat is not found", solo.waitForActivity("Chat"));
+            assertTextCaseActivity("Проверка перехода на Activity Chat", "Chat");
+            solo.sleep(300);
+            solo.sendKey(KeyEvent.KEYCODE_MENU);
+            solo.sleep(500);
+            solo.clickInList(4, 0);
+            solo.sleep(500);
+            assertTextCaseActivity("Проверка перехода на Activity ContactTabs", "ContactTabs");
+            solo.sleep(1000);
 
 /**
  //  CallHistory tab
@@ -89,61 +88,34 @@ public class TestBug31492 {
  solo.sleep(1500);
  */
 
+            /** 2. Выход с приложения  */
+            //2.0 Нажатимаем на HomeButton
+            solo.clickOnActionBarHomeButton();
+            solo.sleep(300);
+            android.widget.ListView homeListView = solo.getView(ListView.class, 0); //TODO: version 1.30 -> 0
+            solo.sleep(1000);
 
-        nameImg = "myScreenShot";
-        solo.takeScreenshot(nameImg);
+            //2.1  Позиция Logout № 10 в списке
+            String itemLogout = findDrawerListElement(10); //TODO: version 1.30 -> 10
+            solo.sleep(300);
 
-        /** 2. Выход с приложения  */
-        //2.0 Нажатимаем на HomeButton
-        solo.clickOnActionBarHomeButton();
-        solo.sleep(300);
-        android.widget.ListView homeListView = solo.getView(ListView.class, 0); //TODO: version 1.30 -> 0
-        solo.sleep(1000);
+            //2.2 Прокручиваем список на последнюю позицию
+            solo.scrollListToLine(homeListView, homeListView.getLastVisiblePosition());
+            solo.sleep(300);
 
-        //2.1  Позиция Logout № 11 в списке
-        String itemLogout = findDrawerListElement(10); //TODO: version 1.30 -> 10
-        solo.sleep(300);
-
-        //2.2 Прокручиваем список на последнюю позицию
-        solo.scrollListToLine(homeListView, homeListView.getLastVisiblePosition());
-        solo.sleep(300);
-
-        //2.3 Нажимаем на Logout
-        solo.clickOnText(java.util.regex.Pattern.quote(itemLogout));
-        solo.sleep(300);
-
-        //2.4 проверка на переход Activity Login
-        assertTrue("Login is not found!", solo.waitForActivity("Login"));
-        solo.sleep(300);
-        solo.goBack();
-
-
-        File f1 = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/" + nameImg + ".jpg");
-        File f2 = new File(Environment.getExternalStorageDirectory() + "/Robotium-Screenshots/report_/"+ nameImg + ".jpg"); // 2 action
-        try {
-            f2.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+            //2.3 Нажимаем на Logout
+            solo.clickOnText(java.util.regex.Pattern.quote(itemLogout));
+            solo.sleep(300);
+            assertTextCaseActivity("Проверка перехода на Activity Login", "Login");
+            solo.sleep(300);
+            solo.goBack();
+        } catch (Exception | AssertionFailedError e) {
+            errorMessage = e.getMessage();
+            throw new RuntimeException(e);
+        } finally {
+            // :11 END Report
+            destroyReport(errorMessage);
         }
-     //   boolean created = f2.mkdirs();
-
-        try {
-            InputStream in = new FileInputStream(f1);
-            OutputStream out = new FileOutputStream(f2);
-
-            int i;
-            while ((i = in.read()) != -1) {
-                out.write(i);
-            }
-
-            out.flush();
-            out.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
     private String findDrawerListElement(int positionElements) {

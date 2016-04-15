@@ -49,7 +49,7 @@ public class JMail extends javax.mail.Authenticator {
         _user = "kovalek.kovalek"; // username : Логин аккаунта GMAIL
         _pass = "1357900svm"; // password : Пароль аккаунта GMAIL
         _from = "TrueConf"; // email sent from
-        _subject = "anna.kovalek@gmail.com"; // email subject
+        _subject = "TrueConf Report"; // email subject
         _body = message; // email body
 
         _debuggable = false; // debug mode on or off - default off

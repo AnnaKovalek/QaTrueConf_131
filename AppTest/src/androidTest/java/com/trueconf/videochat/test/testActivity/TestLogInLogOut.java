@@ -13,7 +13,11 @@ import junit.framework.AssertionFailedError;
 import static junit.framework.Assert.assertTrue;
 
 /**
- *
+ * Проверка авторизации в клиенте (для проверки авторизации для поддерживаемых локализаций:
+ * ar арабский, cs чешский, de немецкий, en английский, es испанский, fr французский, ja японский,
+ * ko корейский, pl польский, pt португальский, ru русский, tw тайский, tr турецкий, vi вьетнамский,
+ * zh тайвань, китайский
+ * )
  */
 public class TestLogInLogOut extends JReport {
     private String errorMessage;
@@ -24,14 +28,14 @@ public class TestLogInLogOut extends JReport {
 
     public void testLogInLogOut() {
         try {
-            initReport("testCorrectLogin", "Метод проверки первой авторизации при введении корректных значений TrueConfId и password, проверки уведомления menuDialogHeader"); // :1 Begin Report
+            initReport("testLogInLogOut", "Метод проверки первой авторизации при введении корректных значений TrueConfId и password, проверки уведомления menuDialogHeader"); // :1 Begin Report
 
-            Timeout.setSmallTimeout(10000);
+            Timeout.setSmallTimeout(12000);
             solo.waitForActivity("Login", 2000);
             assertTextCaseActivity("Запуск приложения:", "Login"); // :1 case
             solo.clickOnView(solo.getView("tv_is_have_account"));
             solo.sleep(300);
-            assertTrue("Activity Login is not found", solo.waitForActivity("Login"));
+            assertTextCaseActivity("Проверка перехода на Activity Login", "Login");
             solo.clickOnView(solo.getView("et_videochat_id"));
             solo.clearEditText((android.widget.EditText) solo.getView("et_videochat_id"));
             solo.enterText((android.widget.EditText) solo.getView("et_videochat_id"), "fardini");
@@ -40,8 +44,9 @@ public class TestLogInLogOut extends JReport {
             solo.enterText((android.widget.EditText) solo.getView("et_password"), "123az12");
             solo.sleep(300);
             solo.clickOnView(solo.getView("btn_login_ll"));
-            solo.sleep(1500);
-            assertTrue("Activity ContactTabs is not found", solo.waitForActivity("ContactTabs"));
+            solo.sleep(2000);
+            assertTextCaseActivity("Проверка перехода на Activity ContactTabs", "ContactTabs");
+            // assertTrue("Activity ContactTabs is not found", solo.waitForActivity("ContactTabs"));
             //Стартовое уведомление
             View menuDialogHeader = null;
             try {
@@ -74,7 +79,7 @@ public class TestLogInLogOut extends JReport {
             solo.clickOnText(java.util.regex.Pattern.quote(itemLogout));
             solo.sleep(300);
 
-            //2.4 проверка на переход Activity Login
+            //2.4 Проверка на переход Activity Login
             assertTextCaseActivity("Проверка перехода на Activity: Login", "Login"); // :8 case
             solo.sleep(300);
             solo.goBack();
